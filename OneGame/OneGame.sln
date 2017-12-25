@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneGame", "OneGame.csproj", "{DBF00581-F3E6-8043-C1CD-B0FB19C01C49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneGame.Editor", "OneGame.Editor.csproj", "{4AFD9055-72AA-6B19-9AB6-641CB3F0EF11}"
