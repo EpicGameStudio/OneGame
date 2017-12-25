@@ -44,11 +44,11 @@ TagManager:
   - name: Background
     uniqueID: 246019235
     locked: 0
-  - name: Collider
-    uniqueID: 1832351993
-    locked: 0
   - name: Player
     uniqueID: 1090823289
+    locked: 0
+  - name: Collider
+    uniqueID: 1832351993
     locked: 0
   - name: Cover
     uniqueID: 1440631329
