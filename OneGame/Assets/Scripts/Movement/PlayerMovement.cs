@@ -5,28 +5,38 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Field
     public float RunSpeed;
+    public Direction directionStruct;
     private Animator animator;
     private Vector2 direction;
+    private Rigidbody2D rigibody2D;
+
+
+    #endregion
+
 
     // Use this for initialization
-    void Awake ()
+    void Awake()
     {
         animator = this.GetComponent<Animator>();
         if (animator == null)
             throw new ArgumentNullException("animator");
 
+        rigibody2D = this.GetComponent<Rigidbody2D>();
+        if (rigibody2D == null)
+            throw new ArgumentNullException("rigibody2D");
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-		
-	}
+
+    }
 
     private Direction Vector2Direction(Vector2 direction)
     {
-        if (Vector2.Dot(direction,Vector2.up) <= 1)
+        if (Vector2.Dot(direction, Vector2.up) <= 1)
         {
             return Direction.Up;
         }
@@ -34,12 +44,12 @@ public class PlayerMovement : MonoBehaviour
         {
             return Direction.Down;
         }
-        else if(Vector2.Dot(direction, Vector2.left) <= 1)
+        else if (Vector2.Dot(direction, Vector2.left) <= 1)
         {
-            return Direction.Left ;
+            return Direction.Left;
 
         }
-        else if(Vector2.Dot(direction, Vector2.right) <= 1)
+        else if (Vector2.Dot(direction, Vector2.right) <= 1)
         {
             return Direction.Right;
         }
@@ -61,14 +71,6 @@ public class PlayerMovement : MonoBehaviour
             default:
                 return Vector2.down;
         }
-    }
-
-    enum Direction
-    {
-        Up,
-        Down,
-        Right,
-        Left,
     }
 
     private void FixedUpdate()
@@ -111,6 +113,10 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("LastMoveX", 0);
             Move(Direction.Down);
         }
+        if (horizontal == 0 && vertical == 0)
+        {
+            StopMovement();
+        }
         //new WaitForSeconds(0.08f);
     }
 
@@ -119,21 +125,31 @@ public class PlayerMovement : MonoBehaviour
         return null;
     }
 
+
+    private void StopMovement()
+    {
+        rigibody2D.velocity = Vector2.zero;
+    }
+
     private void Move(Direction direction)
     {
         switch (direction)
         {
             case Direction.Up:
-                this.transform.position += Vector3.up * RunSpeed *Time.deltaTime;
+                //this.transform.position += Vector3.up * RunSpeed *Time.deltaTime;
+                rigibody2D.velocity = Vector3.up * RunSpeed;
                 break;
             case Direction.Down:
-                this.transform.position -= Vector3.up * RunSpeed * Time.deltaTime;
+                //this.transform.position -= Vector3.up * RunSpeed * Time.deltaTime;
+                rigibody2D.velocity = Vector3.down * RunSpeed;
                 break;
             case Direction.Right:
-                this.transform.position += Vector3.right * RunSpeed * Time.deltaTime;
+                //this.transform.position += Vector3.right * RunSpeed * Time.deltaTime;
+                rigibody2D.velocity = Vector3.right * RunSpeed;
                 break;
             case Direction.Left:
-                this.transform.position -= Vector3.right * RunSpeed * Time.deltaTime;
+                //this.transform.position -= Vector3.right * RunSpeed * Time.deltaTime;
+                rigibody2D.velocity = Vector3.left * RunSpeed;
                 break;
             default:
                 break;
