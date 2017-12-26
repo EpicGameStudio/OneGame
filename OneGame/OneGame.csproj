@@ -272,6 +272,8 @@
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineMixer.cs" />
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineShot.cs" />
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineTrack.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleMessageBoxManager.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleStateMachineManager.cs" />
     <Compile Include="Assets\Scripts\Common\MovementCommon.cs" />
     <Compile Include="Assets\Scripts\Helper\DialogTriggerZoneHolder.cs" />
     <Compile Include="Assets\Scripts\Managers\DialogManager.cs" />
