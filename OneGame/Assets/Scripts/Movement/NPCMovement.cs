@@ -9,7 +9,7 @@ public class NPCMovement : MonoBehaviour {
     public Direction direction;
     public NPCMovementType movementType;
     public float speed;
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
     private Animator animator;
     #endregion
 

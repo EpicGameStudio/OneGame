@@ -217,6 +217,9 @@
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>C:/Users/Huang/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="JsonManager">
+      <HintPath>Assets/Plugins/JsonManager.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachineBlendListCamera.cs" />
@@ -274,8 +277,13 @@
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineTrack.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleMessageBoxManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleStateMachineManager.cs" />
+    <Compile Include="Assets\Scripts\Common\DataManager.cs" />
+    <Compile Include="Assets\Scripts\Common\MenuControl.cs" />
     <Compile Include="Assets\Scripts\Common\MovementCommon.cs" />
+    <Compile Include="Assets\Scripts\Common\PauseMenuManager.cs" />
+    <Compile Include="Assets\Scripts\Common\PlayerData\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Helper\DialogTriggerZoneHolder.cs" />
+    <Compile Include="Assets\Scripts\launcher\ClickHandler.cs" />
     <Compile Include="Assets\Scripts\Managers\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Movement\NPCMovement.cs" />
     <Compile Include="Assets\Scripts\Movement\PlayerMovement.cs" />
