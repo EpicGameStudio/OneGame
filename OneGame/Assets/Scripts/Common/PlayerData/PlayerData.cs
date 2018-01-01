@@ -25,6 +25,7 @@ namespace GameDataObject
 
         public string Id { get; set; }
 
+        public int MaxHP { get; set; }
         public int HP { get; set; }
 
         public int Exp { get; set; }
@@ -35,7 +36,23 @@ namespace GameDataObject
 
         public int Defense { get; set; }
 
+        private List<Skill> skills = new List<Skill>();
+        public List<Skill> Skills
+        {
+            get
+            {
+                if (skills.Count == 0)
+                {
+                    skills.Add(SkillManager.Instance.GetSkill("0001"));
+                    skills.Add(SkillManager.Instance.GetSkill("0002"));
+                }
+                return skills;
+            }
+        }
+             
         //public GameObject Object { get; set; }
     }
+
+    
 }
 

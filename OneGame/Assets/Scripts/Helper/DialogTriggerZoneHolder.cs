@@ -25,7 +25,7 @@ public class DialogTriggerZoneHolder : MonoBehaviour {
             return;
         if (collision.gameObject.name == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("A"))
             {
                 if (!dialogManager.isDialogBoxActive)
                 {

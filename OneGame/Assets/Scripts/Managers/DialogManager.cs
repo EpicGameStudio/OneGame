@@ -31,7 +31,7 @@ public class DialogManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonDown("A"))
         {
             if (dialogLines == null||(dialogLines!=null&& dialogLines.Length<=0))
                 return;

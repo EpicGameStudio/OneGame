@@ -11,6 +11,13 @@ public class BattleStateMachineManager : MonoBehaviour
     public BattleState currentState;
     private BattleMessageBoxManager dialogManager;
 
+    public enum BattleState
+    {
+        Wait,
+        TakeAction,
+        Performation,
+    }
+
     private void Awake()
     {
         dialogManager = FindObjectOfType<BattleMessageBoxManager>();
@@ -52,60 +59,60 @@ public class BattleStateMachineManager : MonoBehaviour
 
         List<string> statesList;
         //1 attack
-        statesList = new List<string> { "attack","bag", "team", "runaway"};
-        States.Add("entry", new BattleState()
-        {
-            Name = "entry",
-            StateAction = () => 
-            {
-                dialogManager.dialogLines = new string[] { "what do you want to do?", "good!!" };
-            },
-            StatesCanGoTo = statesList,
-        });
+        //statesList = new List<string> { "attack","bag", "team", "runaway"};
+        //States.Add("entry", new BattleState()
+        //{
+        //    Name = "entry",
+        //    StateAction = () => 
+        //    {
+        //        dialogManager.dialogLines = new string[] { "what do you want to do?", "good!!" };
+        //    },
+        //    StatesCanGoTo = statesList,
+        //});
 
-        statesList = new List<string> { "attack_affect", "entry" };
-        States.Add("attack", new BattleState()
-        {
-            Name = "attack",
-            StateAction = () =>
-            {
+        //statesList = new List<string> { "attack_affect", "entry" };
+        //States.Add("attack", new BattleState()
+        //{
+        //    Name = "attack",
+        //    StateAction = () =>
+        //    {
 
-            },
-            StatesCanGoTo = statesList,
-        });
+        //    },
+        //    StatesCanGoTo = statesList,
+        //});
 
-        statesList = new List<string> { "bag_affect", "entry" };
-        States.Add("bag", new BattleState()
-        {
-            Name = "bag",
-            StateAction = () =>
-            {
+        //statesList = new List<string> { "bag_affect", "entry" };
+        //States.Add("bag", new BattleState()
+        //{
+        //    Name = "bag",
+        //    StateAction = () =>
+        //    {
 
-            },
-            StatesCanGoTo = statesList,
-        });
+        //    },
+        //    StatesCanGoTo = statesList,
+        //});
 
-        statesList = new List<string> { "team_affect", "entry" };
-        States.Add("team", new BattleState()
-        {
-            Name = "team",
-            StateAction = () =>
-            {
+        //statesList = new List<string> { "team_affect", "entry" };
+        //States.Add("team", new BattleState()
+        //{
+        //    Name = "team",
+        //    StateAction = () =>
+        //    {
 
-            },
-            StatesCanGoTo = statesList,
-        });
+        //    },
+        //    StatesCanGoTo = statesList,
+        //});
 
-        statesList = new List<string> { "runaway_affect", "entry" };
-        States.Add("runaway", new BattleState()
-        {
-            Name = "runaway",
-            StateAction = () =>
-            {
+        //statesList = new List<string> { "runaway_affect", "entry" };
+        //States.Add("runaway", new BattleState()
+        //{
+        //    Name = "runaway",
+        //    StateAction = () =>
+        //    {
 
-            },
-            StatesCanGoTo = statesList,
-        });
+        //    },
+        //    StatesCanGoTo = statesList,
+        //});
 
     }
     #endregion
@@ -115,32 +122,13 @@ public class BattleStateMachineManager : MonoBehaviour
     {
         if (States.ContainsKey(name))
         {
-            currentState = States[name];
-            var temp = currentState.StateAction;
-            if(temp!=null)
-                temp.Invoke();
+            //currentState = States[name];
+            //var temp = currentState.StateAction;
+            //if(temp!=null)
+            //    temp.Invoke();
         }
     }
     #endregion
 }
 
-public class BattleState
-{
-    public string Name { get; set; }
 
-    public Action StateAction { get; set; }
-
-    private List<string> statesCanGoTo = new List<string>();
-
-    public List<string> StatesCanGoTo
-    {
-        get
-        {
-            return statesCanGoTo;
-        }
-        set
-        {
-            statesCanGoTo = value;
-        }
-    }
-}
