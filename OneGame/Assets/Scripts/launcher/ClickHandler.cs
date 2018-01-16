@@ -17,6 +17,6 @@ public class ClickHandler : MonoBehaviour {
 
     public void OnStartButtonClick()
     {
-        SceneManager.LoadScene("OverWorld");
+        SceneManager.LoadScene(SencesName.OverWorldSence);
     }
 }

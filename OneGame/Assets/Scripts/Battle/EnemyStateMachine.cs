@@ -5,7 +5,7 @@ using GameDataObject;
 
 public class EnemyStateMachine : MonoBehaviour {
 
-    public EnemyData Data;
+    public EnemyBase enemyBase;
 
     public enum EnemyState
     {
@@ -30,6 +30,7 @@ public class EnemyStateMachine : MonoBehaviour {
             }
             case EnemyState.Action:
             {
+
                     break;
             }
             case EnemyState.Dead:

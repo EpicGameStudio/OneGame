@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameDataObject
+[System.Serializable]
+public class EnemyBase
 {
-    public class EnemyData
-    {
-        public int Lv;
-        public int HP;
-        public int Attack;
-        public int Defense;
-        public string Name;
-    }
-
+    public int Lv;
+    public int HP;
+    public int MaxHP;
+    public int Attack;
+    public int Defense;
+    public string Name;
 }
+

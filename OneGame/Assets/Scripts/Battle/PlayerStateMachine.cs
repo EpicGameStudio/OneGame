@@ -11,10 +11,14 @@ public class PlayerStateMachine : MonoBehaviour {
         ChooseAction,
         Action,
         Dead,
+        Win,
     }
+
+    public PlayerBase playerBase;
 
     public PlayerData Data;
 
+    public PlayerState currentState;
 
     private void Awake()
     {
@@ -27,6 +31,19 @@ public class PlayerStateMachine : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+        switch (currentState)
+        {
+            case PlayerState.Waiting:
+                break;
+            case PlayerState.ChooseAction:
+                break;
+            case PlayerState.Action:
+                break;
+            case PlayerState.Dead:
+                break;
+            default:
+                break;
+        }
+    }
 }
