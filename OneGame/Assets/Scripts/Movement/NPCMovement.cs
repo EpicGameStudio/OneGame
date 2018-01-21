@@ -11,6 +11,7 @@ public class NPCMovement : MonoBehaviour {
     public float speed;
     private new Rigidbody2D rigidbody2D;
     private Animator animator;
+    public string NPC_ID;
     #endregion
 
 

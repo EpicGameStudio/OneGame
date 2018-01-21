@@ -271,6 +271,9 @@
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/Huang/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/UnityPackages/JsonNet/Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="OneGame.csproj">

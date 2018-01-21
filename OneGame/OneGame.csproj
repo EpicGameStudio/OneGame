@@ -214,6 +214,9 @@
     <Reference Include="JsonManager">
       <HintPath>Assets/Plugins/JsonManager.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/UnityPackages/JsonNet/Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/Huang/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -275,6 +278,7 @@
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineMixer.cs" />
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineShot.cs" />
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineTrack.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleMessageBoxManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleStateMachineManager.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyBase.cs" />
@@ -282,12 +286,15 @@
     <Compile Include="Assets\Scripts\Battle\PlayerBase.cs" />
     <Compile Include="Assets\Scripts\Battle\PlayerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Battle\SelectorManager.cs" />
+    <Compile Include="Assets\Scripts\Common\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Common\DataManager.cs" />
     <Compile Include="Assets\Scripts\Common\MenuControl.cs" />
     <Compile Include="Assets\Scripts\Common\MovementCommon.cs" />
+    <Compile Include="Assets\Scripts\Common\NPCBase.cs" />
     <Compile Include="Assets\Scripts\Common\PauseMenuManager.cs" />
     <Compile Include="Assets\Scripts\Common\PlayerData\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Common\PlayerData\SkillManager.cs" />
+    <Compile Include="Assets\Scripts\Common\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Common\ScenesName.cs" />
     <Compile Include="Assets\Scripts\Helper\BattleTriggleZoneHolder.cs" />
     <Compile Include="Assets\Scripts\Helper\DialogTriggerZoneHolder.cs" />
@@ -350,6 +357,7 @@
     <Compile Include="Assets\Scripts\SDK\Localization\LocalizedText.cs" />
     <Compile Include="Assets\Scripts\UITest\UIButton.cs" />
     <Compile Include="Assets\Scripts\UITest\UITestMenu.cs" />
+    <Compile Include="Assets\UnityPackages\JsonNetSample\JsonNetSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Cinemachine\ReleaseNotes.txt" />

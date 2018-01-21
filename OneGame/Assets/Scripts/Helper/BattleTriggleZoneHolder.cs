@@ -48,7 +48,7 @@ public class BattleTriggleZoneHolder : MonoBehaviour {
     private IEnumerator StartBattle()
     {
         //yield return StartCoroutine(ShowMessage());
-        SceneManager.LoadScene(SencesName.BattleSence);
+        ScenesManager.Instance.LoadBattleScene();
         yield return null;
     }
 }

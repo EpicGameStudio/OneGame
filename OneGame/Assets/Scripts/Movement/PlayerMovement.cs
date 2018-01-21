@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Vector2 direction;
     private Rigidbody2D rigibody2D;
-
+    public PlayerBase playerBase;
 
     #endregion
 
