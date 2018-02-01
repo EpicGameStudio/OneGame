@@ -7,6 +7,7 @@ public class DialogTriggerZoneHolder : MonoBehaviour {
 
     private DialogManager dialogManager;
     public string[] dialogLines;
+    private PlayerMovement movement;
 	// Use this for initialization
 	void Start () {
         dialogManager = FindObjectOfType<DialogManager>();
@@ -25,16 +26,24 @@ public class DialogTriggerZoneHolder : MonoBehaviour {
             return;
         if (collision.gameObject.name == "Player")
         {
+            movement = collision.gameObject.GetComponent<PlayerMovement>();
+            movement.IsBusy = true;
             if (Input.GetButtonDown("A"))
             {
                 if (!dialogManager.isDialogBoxActive)
                 {
-                    dialogManager.dialogLines = dialogLines;
-                    dialogManager.currentLine = 0;
-                    dialogManager.SetDialogActive(true);                   
+                    StartCoroutine(StartDialog());
                 }
                 
             }
         }
     }
+
+    private IEnumerator StartDialog()
+    {
+        yield return dialogManager.StartDialog(dialogLines);
+        if (movement != null)
+            movement.IsBusy = false;
+    }
+    
 }

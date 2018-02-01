@@ -192,8 +192,17 @@ public class BattleManager : MonoBehaviour {
                     break;
             }
         }
+        
+        EndBattle();
+        
+    }
+
+
+    private void EndBattle()
+    {
         currentState = BattleState.Start;
         EnableInput(false);
+        player.GetComponent<PlayerMovement>().IsBusy = false;
         this.gameObject.SetActive(false);
     }
 
@@ -203,8 +212,9 @@ public class BattleManager : MonoBehaviour {
         //var buttton = attackButton.GetComponent<Button>();
         if (player == null)
             player = GameObject.Find("Player");
-        playerBase = player.GetComponent<PlayerMovement>().playerBase;
-
+        var playerMovement = player.GetComponent<PlayerMovement>();
+        playerBase = playerMovement.playerBase;
+        playerMovement.IsBusy = true;
         playerBar = gameObject.transform.Find("PlayerBar");
         playerBarHP = playerBar.Find("HPForeground");
         playerDisplayer = this.gameObject.transform.Find("PlayerDisplayer").GetComponent<Image>();

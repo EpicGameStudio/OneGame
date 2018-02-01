@@ -56,6 +56,27 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
+    public IEnumerator StartDialog(string[] strings)
+    {
+        dialogLines = strings;
+        currentLine = 0;
+        SetDialogActive(true);
+        if (dialogLines == null || (dialogLines != null && dialogLines.Length <= 0))
+           yield return null;
+        while (currentLine < dialogLines.Length)
+        {
+            if (Input.GetButtonDown("A"))
+            {
+                dialogText.text = dialogLines[currentLine];
+                currentLine++;
+                yield return null;
+            }
+            
+        }
+        SetDialogActive(false);
+        currentLine = 0;
+    }
+
 
     #endregion
 }

@@ -12,9 +12,24 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 direction;
     private Rigidbody2D rigibody2D;
     public PlayerBase playerBase;
+    public bool IsBusy = false;
 
     #endregion
 
+    #region Properties
+    private PlayerMovementStateBase currentState;
+    public PlayerMovementStateBase CurrentState
+    {
+        get
+        {
+            return currentState;
+        }
+        set
+        {
+            currentState = value;
+        }
+    }
+    #endregion
 
     // Use this for initialization
     void Awake()
@@ -28,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
             throw new ArgumentNullException("rigibody2D");
     }
 
+    private void Start()
+    {
+        currentState = PlayerMovementStateBase.PlayerIdleState;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -75,8 +94,146 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //if player is busy, cannot move for the moment. 
+        if (IsBusy)
+        {
+            StopMovement();
+            return;
+        }
+
+        currentState.HandleInput(this);
+        currentState.UpdateMovement(this);
+        Debug.Log(currentState.ToString());
+        
+       
+    }
+
+    IEnumerable Wait()
+    {
+        return null;
+    }
+
+    public Animator GetPlayerAnimator()
+    {
+        return animator;
+    }
+
+    public void StopMovement()
+    {
+        rigibody2D.velocity = Vector2.zero;
+    }
+
+    public void Move(Direction direction,float speed)
+    {
+        switch (direction)
+        {
+            case Direction.Up:
+                //this.transform.position += Vector3.up * RunSpeed *Time.deltaTime;
+                rigibody2D.velocity = Vector3.up * speed;
+                break;
+            case Direction.Down:
+                //this.transform.position -= Vector3.up * RunSpeed * Time.deltaTime;
+                rigibody2D.velocity = Vector3.down * speed;
+                break;
+            case Direction.Right:
+                //this.transform.position += Vector3.right * RunSpeed * Time.deltaTime;
+                rigibody2D.velocity = Vector3.right * speed;
+                break;
+            case Direction.Left:
+                //this.transform.position -= Vector3.right * RunSpeed * Time.deltaTime;
+                rigibody2D.velocity = Vector3.left * speed;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+
+public class PlayerMovementStateBase
+{
+    private static PlayerWalking playerWalkingState;
+    public static PlayerWalking PlayerWalkingState
+    { 
+        get
+        {
+            if (playerWalkingState == null)
+                playerWalkingState = new PlayerWalking();
+            return playerWalkingState;
+        }
+    }
+
+    private static PlayerRuning playerRuningState;
+    public static PlayerRuning PlayerRuningState
+    {
+        get
+        {
+            if (playerRuningState == null)
+                playerRuningState = new PlayerRuning();
+            return playerRuningState;
+        }
+    }
+
+    private static PlayerIdle playerIdleState;
+    public static PlayerIdle PlayerIdleState
+    {
+        get
+        {
+            if (playerIdleState == null)
+                playerIdleState = new PlayerIdle();
+            return playerIdleState;
+        }
+    }
+
+    public virtual void HandleInput(PlayerMovement player)
+    {
+
+    }
+
+    public virtual void UpdateMovement(PlayerMovement player)
+    {
+
+    }
+}
+
+public class PlayerWalking : PlayerMovementStateBase
+{
+    #region Field
+    private float walkingSpeend = 3.0f;
+    #endregion
+
+    public override void HandleInput(PlayerMovement player)
+    {
+        if (Input.GetButtonDown("Run"))
+        {
+            var vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (vertical != 0 || horizontal != 0)
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerRuningState;
+            }
+            else
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerIdleState;
+            }
+                
+        }
+        else
+        {
+            var vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (vertical == 0 && horizontal == 0)
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerIdleState;
+            }
+        }
+    }
+
+    public override void UpdateMovement(PlayerMovement player)
+    {
         var horizontal = Input.GetAxisRaw("Horizontal");
         var vertical = Input.GetAxisRaw("Vertical");
+        var animator = player.GetPlayerAnimator();
         animator.SetBool("IsMoving", false);
         if (horizontal > 0)
         {
@@ -85,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("MoveY", 0);
             animator.SetFloat("LastMoveX", horizontal);
             animator.SetFloat("LastMoveY", 0);
-            Move(Direction.Right);
+            player.Move(Direction.Right, walkingSpeend);
         }
         else if (horizontal < 0)
         {
@@ -93,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("MoveX", horizontal);
             animator.SetFloat("MoveY", 0);
             animator.SetFloat("LastMoveX", horizontal);
-            Move(Direction.Left);
+            player.Move(Direction.Left, walkingSpeend);
         }
         else if (vertical > 0)
         {
@@ -102,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("MoveX", vertical);
             animator.SetFloat("LastMoveY", vertical);
             animator.SetFloat("LastMoveX", 0);
-            Move(Direction.Up);
+            player.Move(Direction.Up, walkingSpeend);
         }
         else if (vertical < 0)
         {
@@ -111,48 +268,116 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("MoveX", 0);
             animator.SetFloat("LastMoveY", vertical);
             animator.SetFloat("LastMoveX", 0);
-            Move(Direction.Down);
-        }
-        if (horizontal == 0 && vertical == 0)
-        {
-            StopMovement();
-        }
-        //new WaitForSeconds(0.08f);
-    }
-
-    IEnumerable Wait()
-    {
-        return null;
-    }
-
-
-    private void StopMovement()
-    {
-        rigibody2D.velocity = Vector2.zero;
-    }
-
-    private void Move(Direction direction)
-    {
-        switch (direction)
-        {
-            case Direction.Up:
-                //this.transform.position += Vector3.up * RunSpeed *Time.deltaTime;
-                rigibody2D.velocity = Vector3.up * RunSpeed;
-                break;
-            case Direction.Down:
-                //this.transform.position -= Vector3.up * RunSpeed * Time.deltaTime;
-                rigibody2D.velocity = Vector3.down * RunSpeed;
-                break;
-            case Direction.Right:
-                //this.transform.position += Vector3.right * RunSpeed * Time.deltaTime;
-                rigibody2D.velocity = Vector3.right * RunSpeed;
-                break;
-            case Direction.Left:
-                //this.transform.position -= Vector3.right * RunSpeed * Time.deltaTime;
-                rigibody2D.velocity = Vector3.left * RunSpeed;
-                break;
-            default:
-                break;
+            player.Move(Direction.Down, walkingSpeend);
         }
     }
 }
+
+public class PlayerIdle : PlayerMovementStateBase
+{
+    public override void HandleInput(PlayerMovement player)
+    {
+        if (Input.GetButton("Run"))
+        {
+            var vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (vertical!=0 || horizontal!=0)
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerRuningState;
+            }            
+        }
+        else
+        {
+            var vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (vertical != 0 || horizontal != 0)
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerWalkingState;
+            }
+        }
+    }
+
+    public override void UpdateMovement(PlayerMovement player)
+    {
+        var animator = player.GetPlayerAnimator();
+        animator.SetBool("IsMoving", false);
+        player.StopMovement();
+    }
+}
+
+public class PlayerRuning:PlayerMovementStateBase
+{
+    #region Field
+    private float runingSpeed = 5.0f;
+    #endregion
+    public override void UpdateMovement(PlayerMovement player)
+    {
+        var horizontal = Input.GetAxisRaw("Horizontal");
+        var vertical = Input.GetAxisRaw("Vertical");
+        var animator = player.GetPlayerAnimator();
+        animator.SetBool("IsMoving", false);
+        if (horizontal > 0)
+        {
+            animator.SetBool("IsMoving", true);
+            animator.SetFloat("MoveX", horizontal);
+            animator.SetFloat("MoveY", 0);
+            animator.SetFloat("LastMoveX", horizontal);
+            animator.SetFloat("LastMoveY", 0);
+            player.Move(Direction.Right, runingSpeed);
+        }
+        else if (horizontal < 0)
+        {
+            animator.SetBool("IsMoving", true);
+            animator.SetFloat("MoveX", horizontal);
+            animator.SetFloat("MoveY", 0);
+            animator.SetFloat("LastMoveX", horizontal);
+            player.Move(Direction.Left, runingSpeed);
+        }
+        else if (vertical > 0)
+        {
+            animator.SetBool("IsMoving", true);
+            animator.SetFloat("MoveY", vertical);
+            animator.SetFloat("MoveX", vertical);
+            animator.SetFloat("LastMoveY", vertical);
+            animator.SetFloat("LastMoveX", 0);
+            player.Move(Direction.Up, runingSpeed);
+        }
+        else if (vertical < 0)
+        {
+            animator.SetBool("IsMoving", true);
+            animator.SetFloat("MoveY", vertical);
+            animator.SetFloat("MoveX", 0);
+            animator.SetFloat("LastMoveY", vertical);
+            animator.SetFloat("LastMoveX", 0);
+            player.Move(Direction.Down, runingSpeed);
+        }
+    }
+
+    public override void HandleInput(PlayerMovement player)
+    {
+        if (!Input.GetButton("Run"))
+        {
+            var vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (vertical != 0 || horizontal != 0)
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerWalkingState;
+            }
+            else
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerIdleState;
+            }
+        }
+        else
+        {
+            var vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (vertical == 0 && horizontal == 0)
+            {
+                player.CurrentState = PlayerMovementStateBase.PlayerIdleState;
+            }
+        }
+    }
+}
+
+
